@@ -1,9 +1,17 @@
 const {writeFileSync} = require("fs");
 
-const saveOutput = (prefix, content) => {
+const timestamp = () => {
   const d = new Date();
-  const ds = d.getFullYear() + "-" + d.getMonth() + "-" + d.getDay() + "-" + d.getHours() + "-" + d.getMinutes() + "-" + d.getMilliseconds();
-  writeFileSync(process.cwd() + '/output/' + prefix + "_" + ds + ".json", JSON.stringify(content.data, null, 2), "utf8");
+  return d.getFullYear() + "-" + d.getMonth() + "-" + d.getDay() + "-" + d.getHours() + "-" + d.getMinutes() + "-" + d.getMilliseconds();
+};
+
+const saveOutput = (prefix, content) => {
+  writeFileSync(process.cwd() + '/output/' + prefix + "_" + timestamp() + ".json", JSON.stringify(content.data, null, 2), "utf8");
+};
+
+const saveBase64 = (prefix, content) => {
+  content = content.replace(/^data:image\/png;base64,/, "");
+  writeFileSync(process.cwd() + '/output/' + prefix + "_" + timestamp() + ".png", content, 'base64');  
 };
 
 const shuffle = (array) => {
@@ -24,4 +32,4 @@ const shuffle = (array) => {
   return array;
 };
 
-module.exports = {saveOutput, shuffle};
+module.exports = {saveOutput, shuffle, saveBase64};
