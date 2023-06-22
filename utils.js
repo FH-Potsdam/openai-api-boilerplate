@@ -1,4 +1,5 @@
-const {writeFileSync} = require("fs");
+const https = require('https');
+const {writeFileSync, createWriteStream} = require("fs");
 
 const timestamp = () => {
   const d = new Date();
@@ -7,6 +8,12 @@ const timestamp = () => {
 
 const saveOutput = (prefix, content) => {
   writeFileSync(process.cwd() + '/output/' + prefix + "_" + timestamp() + ".json", JSON.stringify(content.data, null, 2), "utf8");
+};
+
+const saveImage = (prefix, url) => {
+  https.get(url, (res) => {
+    res.pipe(createWriteStream(process.cwd() + '/output/' + prefix + "_" + timestamp() + ".png"));
+  });
 };
 
 const saveBase64 = (prefix, content) => {
@@ -32,4 +39,4 @@ const shuffle = (array) => {
   return array;
 };
 
-module.exports = {saveOutput, shuffle, saveBase64};
+module.exports = {saveOutput, shuffle, saveBase64, timestamp, saveImage};

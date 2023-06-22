@@ -17,7 +17,9 @@
   },
   "homepage": "https://github.com/FH-Potsdam/openai-api-boilerplate#readme",
   "dependencies": {
+    "axios": "^1.4.0",
     "dotenv": "^16.3.1",
+    "form-data": "^4.0.0",
     "openai": "^3.3.0",
     "replicate": "^0.12.3"
   }
