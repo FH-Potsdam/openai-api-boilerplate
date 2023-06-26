@@ -1,9 +1,11 @@
 require("dotenv").config();
 const Replicate = require("replicate");
+const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 const {saveImage} = require('../utils');
 
 const replicate = new Replicate({
   auth: process.env.REPLICATE_API_TOKEN,
+  fetch: fetch,
 });
 
 (async () => {
