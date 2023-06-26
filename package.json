@@ -21,6 +21,7 @@
     "dotenv": "^16.3.1",
     "form-data": "^4.0.0",
     "openai": "^3.3.0",
+    "node-fetch": "^2.6.11",
     "replicate": "^0.12.3"
   }
 }
