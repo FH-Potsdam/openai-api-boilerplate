@@ -7,21 +7,30 @@ const replicate = new Replicate({
 });
 
 (async () => {
-  const output = await replicate.run(
-    "stability-ai/stable-diffusion:db21e45d3f7023abc2a46ee38a23973f6dce16bb082a930b0c49861f96d1e5bf",
-    {
-      input: {
-        prompt: "a vision of paradise. unreal engine",
-        image_dimensions: "512x512",
-        // negative_prompt: "",
-        num_outputs: 1,
-        num_inference_steps: 20,
-        guidance_scale: 7.5,
-        seed: 1
+  const terms = ["historic", "scifi"];
+  for (let t = 0; t < terms.length; t += 1) {
+    for (let s = 1; s < 4; s += 1) {
+      let k = 1;
+      for (let i = 10; i < 150; i += k) {
+        k += 1;
+        const output = await replicate.run(
+          "stability-ai/stable-diffusion:db21e45d3f7023abc2a46ee38a23973f6dce16bb082a930b0c49861f96d1e5bf",
+          {
+            input: {
+              prompt: terms[t] + " interface design",
+              image_dimensions: "512x512",
+              // negative_prompt: "",
+              num_outputs: 1,
+              num_inference_steps: i,
+              guidance_scale: 7.5,
+              seed: s
+            }
+          }
+        );
+        output.forEach((o, oi) => {
+          saveImage(`rep-id3-${terms[t]}-${s}-${i}-${oi}`, o);
+        });
       }
     }
-  );
-  output.forEach((o, oi) => {
-    saveImage(`rep-${oi}`, o);
-  });
+  }
 })();

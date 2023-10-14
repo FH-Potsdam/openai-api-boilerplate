@@ -16,17 +16,19 @@ if (!apiKey) {
 // implementations should use their native FormData class. React Native
 // implementations should also use their native FormData class.
 const formData = new FormData();
-formData.append('init_image', fs.readFileSync('./dall-e/assets/image-512.png'));
-formData.append('mask_image', fs.readFileSync('./dall-e/assets/mask-512.png'));
+formData.append('init_image', fs.readFileSync('./dreamstudio/white.png'));
+formData.append('mask_image', fs.readFileSync('./dreamstudio/fhp.png'));
 formData.append('mask_source', 'MASK_IMAGE_BLACK');
 formData.append(
   'text_prompts[0][text]',
-  'Giant disco ball'
+  'colorful bird feathers texture'
 );
-formData.append('cfg_scale', '7');
-formData.append('clip_guidance_preset', 'FAST_BLUE');
+// formData.append('cfg_scale', '7');
+// formData.append('clip_guidance_preset', 'FAST_BLUE');
 formData.append('samples', 1);
-formData.append('steps', 30);
+formData.append('seed', 1);
+formData.append('style_preset', 'tile-texture');
+formData.append('steps', 150);
 
 axios.post(`${apiHost}/v1/generation/${engineId}/image-to-image/masking`, formData, {
   headers: {
